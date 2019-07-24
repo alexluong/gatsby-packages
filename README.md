@@ -27,7 +27,7 @@ Provides drop-in support for Firebase
 ## Install
 
 ```
-npm install gatsby-plugin-firebase
+npm install firebase gatsby-plugin-firebase
 ```
 
 ## How to use
