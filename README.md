@@ -7,8 +7,8 @@ Provides drop-in support for Firebase
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [Install](#install)
-- [How to use](#how-to-use)
+- [Installation](#installation)
+- [Usage](#usage)
   - [1. Set up environment variables](#1-set-up-environment-variables)
   - [2. Register Gatsby plugin](#2-register-gatsby-plugin)
   - [3. Use Firebase](#3-use-firebase)
@@ -24,13 +24,13 @@ Provides drop-in support for Firebase
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Install
+## Installation
 
 ```
 npm install firebase gatsby-plugin-firebase
 ```
 
-## How to use
+## Usage
 
 ### 1. Set up environment variables
 
