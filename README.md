@@ -45,7 +45,7 @@ In `gatsby-config.js`:
 ```
 require("dotenv").require()
 
-modules.export = {
+module.exports = {
   ...
 }
 ```
@@ -67,7 +67,7 @@ GATSBY_FIREBASE_APP_ID=<YOUR_FIREBASE_APP_ID>
 In `gatsby-config.js`:
 
 ```js
-modules.export = {
+module.exports = {
   plugins: [
     ...otherPlugins,
 
