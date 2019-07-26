@@ -17,8 +17,8 @@ Provides drop-in support for Firebase
     - [features](#features)
   - [Exports](#exports)
     - [useFirebase](#usefirebase)
-    - [withFirebase](#withfirebase)
     - [FirebaseContext](#firebasecontext)
+  - [Notes](#notes)
 - [Limitations](#limitations)
 - [License](#license)
 
@@ -90,11 +90,10 @@ module.exports = {
 
 ### 3. Use Firebase
 
-There are 3 ways to access `firebase` in your application:
+There are 2 ways to access `firebase` in your application:
 
 1. [`useFirebase` hook](#usefirebase)
-2. [`withFirebase` higher-order component](#withfirebase)
-3. [`FirebaseContext` context](#firebasecontext)
+2. [`FirebaseContext` context](#firebasecontext)
 
 ## API
 
@@ -121,7 +120,11 @@ Although none of the properties is required and everything is defaulted to `fals
 
 > `function() -> firebase`
 
-This plugin exports a React hook `useFirebase`. Here is a sample component:
+This plugin exports a React hook `useFirebase`. It uses the same API as `React.useEffect`, except for that in the first argument, the function has `firebase` as its parameter.
+
+If you're interested in the reasoning behind this API design, you can read about it in the [Notes section](#notes).
+
+Here is a sample component using `useFirebase`:
 
 ```jsx
 import React from "react"
@@ -129,10 +132,48 @@ import { useFirebase } from "gatsby-plugin-firebase"
 import MyData from "./MyData"
 
 function MyComponent() {
-  const firebase = useFirebase()
+  const [data, setData] = React.useState()
+
+  useFirebase(firebase => {
+    firebase
+      .database()
+      .ref("/data")
+      .once("value")
+      .then(snapshot => {
+        setData(snapshot.val())
+      })
+  }, [])
+
+  if (!data) {
+    return null
+  }
+
+  return <MyData data={data} />
+}
+
+export default MyComponent
+```
+
+#### FirebaseContext
+
+> `ReactContext`
+
+`firebase` is saved inside `FirebaseContext`. You can use it like every other React Context. However, be aware that on first render, `firebase` is null, so you'll have to handle that case yourself.
+
+```jsx
+import React from "react"
+import { FirebaseContext } from "gatsby-plugin-firebase"
+import MyData from "./MyData"
+
+function MyComponent({ firebase }) {
+  const firebase = React.useContext(FirebaseContext)
   const [data, setData] = React.useState()
 
   React.useEffect(() => {
+    if (!firebase) {
+      return
+    }
+    
     firebase
       .database()
       .ref("/data")
@@ -152,37 +193,51 @@ function MyComponent() {
 export default MyComponent
 ```
 
-#### withFirebase
+### Notes
 
-> `function(Component: ReactComponent) -> ReactComponent with props firebase`
+It is **highly** recommended that you use `useFirebase` to access your `firebase` instance. Please consider reading [this blog post](https://alexluong.com) to understand the reasoning behind the API.
 
-This plugin also exports a React HOC `withFirebase`. Here is the same sample component but uses HOC instead of hook:
+The idea is that to get Firebase to work in both client-side environment and SSR without any UX compromises, you have to take special care of the Firebase initialization. Thanks to React Hook, you can use `useFirebase` in a kinda-nice way. Without it, you'd have to constantly check whether `firebase` is initialized or not (if not, it's `null`).
+
+Here is a sample higher-order component `withFirebase` that you can write. `gatsby-plugin-firebase` does not export this helper component, but you can customize it as you wish:
+
+```jsx
+export const withFirebase = Component => props => (
+  <FirebaseContext.Consumer>
+    {firebase => <Component {...props} firebase={firebase} />}
+  </FirebaseContext.Consumer>
+)
+```
+
+Then, let's assume that you're on an older version of React and have to use the old API and not React Hooks, here is one way you can use it:
 
 ```jsx
 import React from "react"
-import { withFirebase } from "gatsby-plugin-firebase"
+import { withFirebase } from "./withFirebase"
 import MyData from "./MyData"
 
 class MyComponent extends React.Component {
   state = { data: null }
 
-  componentDidMount() {
-    this.props.firebase
-      .database()
-      .ref("/data")
-      .once("value")
-      .then(snapshot => {
-        this.setState({ data: snapshot.val() })
-      })
+  componentDidUpdate(prevProps) {
+    if (!prevProps.firebase && this.props.firebase) {
+      this.props.firebase
+        .database()
+        .ref("/data")
+        .once("value)
+        .then(snapshot => {
+          this.setState({ data: snapshot.val() }
+        })
+    }
   }
 
   render() {
     const { data } = this.state
-
+    
     if (!data) {
       return null
     }
-
+    
     return <MyData data={data} />
   }
 }
@@ -190,43 +245,24 @@ class MyComponent extends React.Component {
 export default withFirebase(MyComponent)
 ```
 
-#### FirebaseContext
+Because you have to constantly care about whether `firebase` is there or not, this API is not part of the library.
 
-> `ReactContext`
-
-`useFirebase` and `withFirebase` are syntactic sugar to access `firebase` instance inside `FirebaseContext`. You can use it directly like so:
+One way to go around "constantly care about whether `firebase` is there or not" is to write your `withFirebase` component like so:
 
 ```jsx
-import React from "react"
-import { FirebaseContext } from "gatsby-plugin-firebase"
-import MyData from "./MyData"
-
-function MyComponent({ firebase }) {
-  const [data, setData] = React.useState()
-
-  React.useEffect(() => {
-    firebase
-      .database()
-      .ref("/data")
-      .once("value")
-      .then(snapshot => {
-        setData(snapshot.val())
-      })
-  }, [firebase])
-
-  if (!data) {
-    return null
-  }
-
-  return <MyData data={data} />
-}
-
-export default props => (
+export const withFirebase = Component => props => (
   <FirebaseContext.Consumer>
-    {firebase => <MyComponent {...props} firebase={firebase} />}
+    {firebase => 
+      firebase ? <Component {...props} firebase={firebase} /> : null
+    }
   </FirebaseContext.Consumer>
 )
 ```
+
+However, this approach is NOT recommended as it will create white flashes on your website as Firebase is initialized. Trade-off.
+
+In short, you should use `useFirebase` if you can, and kudos to the React team for doing such a great job in React Hooks.
+
 
 ## Limitations
 
