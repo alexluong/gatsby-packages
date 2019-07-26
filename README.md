@@ -129,26 +129,21 @@ Here is a sample component using `useFirebase`:
 ```jsx
 import React from "react"
 import { useFirebase } from "gatsby-plugin-firebase"
-import MyData from "./MyData"
 
 function MyComponent() {
-  const [data, setData] = React.useState()
+  const [user, setUser] = React.useState()
 
   useFirebase(firebase => {
     firebase
       .database()
-      .ref("/data")
+      .ref("/user")
       .once("value")
       .then(snapshot => {
-        setData(snapshot.val())
+        setUser(snapshot.val())
       })
   }, [])
 
-  if (!data) {
-    return null
-  }
-
-  return <MyData data={data} />
+  return <p>Hello {user ? user.name : "there"}</p>
 }
 
 export default MyComponent
@@ -163,11 +158,10 @@ export default MyComponent
 ```jsx
 import React from "react"
 import { FirebaseContext } from "gatsby-plugin-firebase"
-import MyData from "./MyData"
 
 function MyComponent({ firebase }) {
   const firebase = React.useContext(FirebaseContext)
-  const [data, setData] = React.useState()
+  const [user, setUser] = React.useState()
 
   React.useEffect(() => {
     if (!firebase) {
@@ -176,18 +170,14 @@ function MyComponent({ firebase }) {
     
     firebase
       .database()
-      .ref("/data")
+      .ref("/user")
       .once("value")
       .then(snapshot => {
         setData(snapshot.val())
       })
   }, [firebase])
 
-  if (!data) {
-    return null
-  }
-
-  return <MyData data={data} />
+  return <p>Hello {user ? user.name : "there"}</p>
 }
 
 export default MyComponent
@@ -199,7 +189,7 @@ It is **highly** recommended that you use `useFirebase` to access your `firebase
 
 The idea is that to get Firebase to work in both client-side environment and SSR without any UX compromises, you have to take special care of the Firebase initialization. Thanks to React Hook, you can use `useFirebase` in a kinda-nice way. Without it, you'd have to constantly check whether `firebase` is initialized or not (if not, it's `null`).
 
-Here is a sample higher-order component `withFirebase` that you can write. `gatsby-plugin-firebase` does not export this helper component, but you can customize it as you wish:
+Here is a sample higher-order component `withFirebase` that you can write. `gatsby-plugin-firebase` does not export this helper component.
 
 ```jsx
 export const withFirebase = Component => props => (
@@ -214,10 +204,9 @@ Then, let's assume that you're on an older version of React and have to use the 
 ```jsx
 import React from "react"
 import { withFirebase } from "./withFirebase"
-import MyData from "./MyData"
 
 class MyComponent extends React.Component {
-  state = { data: null }
+  state = { user: null }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.firebase && this.props.firebase) {
@@ -226,42 +215,22 @@ class MyComponent extends React.Component {
         .ref("/data")
         .once("value)
         .then(snapshot => {
-          this.setState({ data: snapshot.val() }
+          this.setState({ data: snapshot.val() })
         })
     }
   }
 
   render() {
-    const { data } = this.state
+    const { user } = this.state
     
-    if (!data) {
-      return null
-    }
-    
-    return <MyData data={data} />
+    return <p>Hello {user ? user.name : "there"}</p>
   }
 }
 
 export default withFirebase(MyComponent)
 ```
 
-Because you have to constantly care about whether `firebase` is there or not, this API is not part of the library.
-
-One way to go around "constantly care about whether `firebase` is there or not" is to write your `withFirebase` component like so:
-
-```jsx
-export const withFirebase = Component => props => (
-  <FirebaseContext.Consumer>
-    {firebase => 
-      firebase ? <Component {...props} firebase={firebase} /> : null
-    }
-  </FirebaseContext.Consumer>
-)
-```
-
-However, this approach is NOT recommended as it will create white flashes on your website as Firebase is initialized. Trade-off.
-
-In short, you should use `useFirebase` if you can, and kudos to the React team for doing such a great job in React Hooks.
+Because you have to constantly be aware of your `firebase` instance, this API is not a part of the library.
 
 
 ## Limitations
