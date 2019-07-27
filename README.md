@@ -183,6 +183,28 @@ function MyComponent({ firebase }) {
 export default MyComponent
 ```
 
+On the other hand, when you need to perform actions based on user events, this would be a great way for you to access `firebase`. At that point, `firebase` should already be initialized, so you don't have to worry about it anymore:
+
+```jsx
+import React from "react"
+import { FirebaseContext } from "gatsby-plugin-firebase"
+
+function MyComponent({ firebase }) {
+  const firebase = React.useContext(FirebaseContext)
+
+  function addData() {
+    firebase
+      .database()
+      .ref("/user")
+      .set("Alex")
+  }
+
+  return <button onClick={setUser}>Set User Name to Alex</button>
+}
+
+export default MyComponent
+```
+
 ### Notes
 
 It is **highly** recommended that you use `useFirebase` to access your `firebase` instance. Please consider reading [this blog post](https://alexluong.com) to understand the reasoning behind the API.
