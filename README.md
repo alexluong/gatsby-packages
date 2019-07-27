@@ -192,7 +192,7 @@ import { FirebaseContext } from "gatsby-plugin-firebase"
 function MyComponent({ firebase }) {
   const firebase = React.useContext(FirebaseContext)
 
-  function addData() {
+  function setUser() {
     firebase
       .database()
       .ref("/user")
