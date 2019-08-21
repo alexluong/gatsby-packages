@@ -43,7 +43,7 @@ npm install -D dotenv
 In `gatsby-config.js`:
 
 ```
-require("dotenv").require()
+require("dotenv").config()
 
 module.exports = {
   ...
