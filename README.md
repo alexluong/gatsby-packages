@@ -235,7 +235,7 @@ class MyComponent extends React.Component {
       this.props.firebase
         .database()
         .ref("/data")
-        .once("value)
+        .once("value")
         .then(snapshot => {
           this.setState({ data: snapshot.val() })
         })
