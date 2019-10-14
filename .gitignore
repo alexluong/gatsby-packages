@@ -1,0 +1,8 @@
+.DS_Store
+.idea
+.vscode
+.env
+.cache
+build
+public
+node_modules
