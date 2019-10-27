@@ -1,0 +1,12 @@
+{
+  "name": "gatsby-packages",
+  "private": true,
+  "version": "1.0.0",
+  "repository": "git@github.com:alexluong/gatsby-packages.git",
+  "author": "Alex Luong <alex@alexluong.com>",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ]
+}
