@@ -2,7 +2,7 @@
 
 This is the central repository for all my Gatsby packages.
 
-Current packages:
+Available packages:
 
-- [`gatsby-plugin-firebase`](https://github.com/alexluong/gatsby-packages/tree/master/packages/gatsby-plugin-firebase)
-- [`gatsby-plugin-prefix`](https://github.com/alexluong/gatsby-packages/tree/master/packages/gatsby-plugin-prefix)
+- [`gatsby-plugin-firebase`](https://www.npmjs.com/package/gatsby-plugin-firebase)
+- [`gatsby-plugin-prefix`](https://www.npmjs.com/package/gatsby-plugin-prefix)
