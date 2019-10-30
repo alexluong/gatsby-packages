@@ -1,39 +1,29 @@
-const ERROR_MESSAGE = `For "gatsby-plugin-firebase", you must pass a valid option field "features".
+exports.onCreateWebpackConfig = ({ plugins, actions }, pluginOptions) => {
+  const {
+    credentials: {
+      apiKey,
+      authDomain,
+      databaseURL,
+      projectId,
+      storageBucket,
+      messagingSenderId,
+      appId
+    }
+  } = pluginOptions;
 
-Here is a sample valid set up:
-
-  {
-    resolve: "gatsby-plugin-firebase",
-    options: {
-      features: {
-        auth: true,
-        database: true,
-        firestore: false,
-        storage: false,
-        messaging: false,
-        functions: true,
-      },
-    },
-  },
-
-Learn more at https://github.com/alexluong/gatsby-plugin-firebase.
-`
-
-exports.onPreBootstrap = ({ reporter }, options) => {
-  if (!options.features) {
-    reporter.panic(ERROR_MESSAGE)
-  }
-
-  const { features } = options
-
-  if (
-    !features.auth &&
-    !features.database &&
-    !features.firestore &&
-    !features.storage &&
-    !features.messaging &&
-    !features.functions
-  ) {
-    reporter.panic(ERROR_MESSAGE)
-  }
-}
+  actions.setWebpackConfig({
+    plugins: [
+      plugins.define({
+        "process.env": {
+          FIREBASE_API_KEY: JSON.stringify(apiKey),
+          FIREBASE_AUTH_DOMAIN: JSON.stringify(authDomain),
+          FIREBASE_DATABASE_URL: JSON.stringify(databaseURL),
+          FIREBASE_PROJECT_ID: JSON.stringify(projectId),
+          FIREBASE_STORAGE_BUCKET: JSON.stringify(storageBucket),
+          FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(messagingSenderId),
+          FIREBASE_APP_ID: JSON.stringify(appId)
+        }
+      })
+    ]
+  });
+};
