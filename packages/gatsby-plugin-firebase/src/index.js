@@ -25,6 +25,7 @@ function Index({ features, children }) {
         messaging,
         functions,
         performance,
+        analytics,
       ]).then(values => {
         const firebaseInstance = values[0]
         firebaseInstance.initializeApp({
