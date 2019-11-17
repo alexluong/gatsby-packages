@@ -13,6 +13,8 @@ function Index({ features, children }) {
       const storage = features.storage ? import("firebase/storage") : null
       const messaging = features.messaging ? import("firebase/messaging") : null
       const functions = features.functions ? import("firebase/functions") : null
+      const performance = features.performance ? import("firebase/performance") : null
+      const analytics = features.analytics ? import("firebase/analytics") : null
 
       Promise.all([
         app,
@@ -22,6 +24,7 @@ function Index({ features, children }) {
         storage,
         messaging,
         functions,
+        performance,
       ]).then(values => {
         const firebaseInstance = values[0]
         firebaseInstance.initializeApp({
@@ -32,6 +35,7 @@ function Index({ features, children }) {
           storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
           messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
           appId: process.env.GATSBY_FIREBASE_APP_ID,
+          measurementId: process.env.GATSBY_FIREBASE_MEASUREMENT_ID ? process.env.GATSBY_FIREBASE_MEASUREMENT_ID : null,
         })
         setFirebase(firebaseInstance)
       })
