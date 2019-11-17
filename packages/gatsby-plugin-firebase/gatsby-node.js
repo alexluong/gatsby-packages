@@ -13,6 +13,7 @@ Here is a sample valid set up:
         messaging: false,
         functions: true,
         performance: false,
+        analytics: false,
       },
     },
   },
@@ -34,7 +35,8 @@ exports.onPreBootstrap = ({ reporter }, options) => {
     !features.storage &&
     !features.messaging &&
     !features.functions &&
-    !features.performance
+    !features.performance && 
+    !features.analytics
   ) {
     reporter.panic(ERROR_MESSAGE)
   }
