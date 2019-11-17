@@ -12,6 +12,7 @@ Here is a sample valid set up:
         storage: false,
         messaging: false,
         functions: true,
+        performance: false,
       },
     },
   },
@@ -32,7 +33,8 @@ exports.onPreBootstrap = ({ reporter }, options) => {
     !features.firestore &&
     !features.storage &&
     !features.messaging &&
-    !features.functions
+    !features.functions &&
+    !features.performance
   ) {
     reporter.panic(ERROR_MESSAGE)
   }
