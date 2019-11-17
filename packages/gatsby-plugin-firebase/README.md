@@ -60,6 +60,7 @@ GATSBY_FIREBASE_PROJECT_ID=<YOUR_FIREBASE_PROJECT_ID>
 GATSBY_FIREBASE_STORAGE_BUCKET=<YOUR_FIREBASE_STORAGE_BUCKET>
 GATSBY_FIREBASE_MESSAGING_SENDER_ID=<YOUR_FIREBASE_MESSAGING_SENDER_ID>
 GATSBY_FIREBASE_APP_ID=<YOUR_FIREBASE_APP_ID>
+GATSBY_FIREBASE_MEASUREMENT_ID=<YOUR_FIREBASE_ANALYTICS_TRACKING_ID>
 ```
 
 ### 2. Register Gatsby plugin
@@ -81,6 +82,7 @@ module.exports = {
           storage: false,
           messaging: false,
           functions: true,
+          performance: false,
         },
       },
     },
@@ -103,14 +105,16 @@ There are 2 ways to access `firebase` in your application:
 
 `features` is a `required` option. It specifies which features of Firebase you intend to use.
 
-| property    | type      | required | default | description                         |
-| ----------- | --------- | -------- | ------- | ----------------------------------- |
-| `auth`      | `boolean` | `false`  | `false` | import `firebase/auth` package      |
-| `database`  | `boolean` | `false`  | `false` | import `firebase/database` package  |
-| `firestore` | `boolean` | `false`  | `false` | import `firebase/firestore` package |
-| `storage`   | `boolean` | `false`  | `false` | import `firebase/storage` package   |
-| `messaging` | `boolean` | `false`  | `false` | import `firebase/messaging` package |
-| `functions` | `boolean` | `false`  | `false` | import `firebase/functions` package |
+| property      | type      | required | default | description                           |
+| ------------- | --------- | -------- | ------- | ------------------------------------- |
+| `auth`        | `boolean` | `false`  | `false` | import `firebase/auth` package        |
+| `database`    | `boolean` | `false`  | `false` | import `firebase/database` package    |
+| `firestore`   | `boolean` | `false`  | `false` | import `firebase/firestore` package   |
+| `storage`     | `boolean` | `false`  | `false` | import `firebase/storage` package     |
+| `messaging`   | `boolean` | `false`  | `false` | import `firebase/messaging` package   |
+| `functions`   | `boolean` | `false`  | `false` | import `firebase/functions` package   |
+| `performance` | `boolean` | `false`  | `false` | import `firebase/performance` package |
+| `analytics`   | `boolean` | `false`  | `false` | import `firebase/analytics` package   |
 
 Although none of the properties is required and everything is defaulted to `false`, you must specify at least 1 feature and set its value to `true`.
 
