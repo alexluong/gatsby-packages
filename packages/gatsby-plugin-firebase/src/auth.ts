@@ -3,7 +3,13 @@ import firebase from "./firebase";
 
 const LS_ITEM = "isLoggedIn";
 
-function useAuth() {
+interface UseAuth {
+  isInitialized: Boolean;
+  isLoggedIn: Boolean;
+  user: firebase.User;
+}
+
+function useAuth(): UseAuth {
   const [isInitialized, setIsInitialized] = React.useState(false);
   const [user, setUser] = React.useState(null);
 

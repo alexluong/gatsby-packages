@@ -1,8 +1,10 @@
 {
   "name": "gatsby-plugin-firebase",
-  "version": "0.2.0-rc",
+  "version": "0.2.0-beta.1",
   "license": "MIT",
   "description": "Gatsby plugin that provides drop-in support for Firebase",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "Alex Luong <alex@alexluong.com>",
   "repository": {
     "type": "git",
@@ -20,5 +22,8 @@
     "gatsby": "2.x",
     "react": "16.8.x",
     "react-dom": "16.8.x"
+  },
+  "dependencies": {
+    "gatsby-plugin-typescript": "^2.1.17"
   }
 }
