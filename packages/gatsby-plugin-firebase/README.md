@@ -9,8 +9,8 @@ Provides drop-in support for Firebase
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [1. Register Gatsby plugin](#2-register-gatsby-plugin)
-  - [2. Use Firebase](#3-use-firebase)
+  - [1. Register Gatsby plugin](#1-register-gatsby-plugin)
+  - [2. Use Firebase](#2-use-firebase)
 - [API](#api)
   - [Gatsby options](#gatsby-options)
     - [features](#features)
