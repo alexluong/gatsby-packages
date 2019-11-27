@@ -9,8 +9,9 @@ Provides drop-in support for Firebase
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [1. Register Gatsby plugin](#1-register-gatsby-plugin)
-  - [2. Use Firebase](#2-use-firebase)
+  - [1. Set up environment variables](#1-set-up-environment-variables)
+  - [2. Register Gatsby plugin](#2-register-gatsby-plugin)
+  - [3. Use Firebase](#3-use-firebase)
 - [API](#api)
   - [Gatsby options](#gatsby-options)
     - [features](#features)
@@ -31,44 +32,9 @@ npm install firebase gatsby-plugin-firebase
 
 ## Usage
 
-### 1. Register Gatsby plugin
+### 1. Set up environment variables
 
-In `gatsby-config.js`:
-
-```js
-module.exports = {
-  plugins: [
-    ...otherPlugins,
-
-    {
-      resolve: "gatsby-plugin-firebase",
-      options: {
-        features: {
-          auth: true,
-          database: true,
-          firestore: false,
-          storage: false,
-          messaging: false,
-          functions: true,
-          performance: false,
-        },
-        credentials: {
-          apiKey: "<YOUR_FIREBASE_API_KEY>",
-          authDomain: "<YOUR_FIREBASE_AUTH_DOMAIN>",
-          databaseURL: "<YOUR_FIREBASE_DATABASE_URL>",
-          projectId: "<YOUR_FIREBASE_PROJECT_ID>",
-          storageBucket: "<YOUR_FIREBASE_STORAGE_BUCKET>",
-          messagingSenderId: "<YOUR_FIREBASE_MESSAGING_SENDER_ID>",
-          appId: "<YOUR_FIREBASE_APP_ID>",
-          measurementId: "<YOUR_FIREBASE_MEASUREMENT_ID>",
-        },
-      },
-    },
-  ],
-}
-```
-
-The `credentials` option defines your firebase credentials. If your variables change in different environments, consider using environment variables instead. This plugin can also pull your firebase credentials from environment variables. One way to do that is using `dotenv` library:
+This plugin depends on environment variables. One way to do that is using `dotenv` library:
 
 ```
 npm install -D dotenv
@@ -97,7 +63,63 @@ GATSBY_FIREBASE_APP_ID=<YOUR_FIREBASE_APP_ID>
 GATSBY_FIREBASE_MEASUREMENT_ID=<YOUR_FIREBASE_ANALYTICS_TRACKING_ID>
 ```
 
-### 2. Use Firebase
+If you do not want to use environment variables, you can pass the credentials directly into the plugin options like this:
+
+```js
+module.exports = {
+  plugins: [
+    ...otherPlugins,
+
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        features: {
+          ...allFeatures
+        },
+        credentials: {
+          apiKey: 'YOUR_GATSBY_FIREBASE_API_KEY',
+          authDomain: 'YOUR_GATSBY_FIREBASE_AUTH_DOMAIN',
+          databaseURL: 'YOUR_GATSBY_FIREBASE_DATABASE_URL',
+          projectId: 'YOUR_GATSBY_FIREBASE_PROJECT_ID',
+          storageBucket: 'YOUR_GATSBY_FIREBASE_STORAGE_BUCKET',
+          messagingSenderId: 'YOUR_GATSBY_FIREBASE_MESSAGING_SENDER_ID',
+          appId: 'YOUR_GATSBY_FIREBASE_APP_ID',
+          measurementId: 'YOUR_GATSBY_FIREBASE_MEASUREMENT_ID',
+        }
+      },
+    },
+  ],
+}
+```
+
+### 2. Register Gatsby plugin
+
+In `gatsby-config.js`:
+
+```js
+module.exports = {
+  plugins: [
+    ...otherPlugins,
+
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        features: {
+          auth: true,
+          database: true,
+          firestore: false,
+          storage: false,
+          messaging: false,
+          functions: true,
+          performance: false,
+        },
+      },
+    },
+  ],
+}
+```
+
+### 3. Use Firebase
 
 There are 2 ways to access `firebase` in your application:
 
