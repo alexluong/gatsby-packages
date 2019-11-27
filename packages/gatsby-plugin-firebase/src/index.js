@@ -1,7 +1,7 @@
 import React from "react"
 import FirebaseContext from "./components/FirebaseContext"
 
-function Index({ features, env = {}, children }) {
+function Index({ features, credentials = {}, children }) {
   const [firebase, setFirebase] = React.useState(null)
 
   React.useEffect(() => {
@@ -29,14 +29,14 @@ function Index({ features, env = {}, children }) {
       ]).then(values => {
         const firebaseInstance = values[0]
         firebaseInstance.initializeApp({
-          apiKey: env.GATSBY_FIREBASE_API_KEY || process.env.GATSBY_FIREBASE_API_KEY,
-          authDomain: env.GATSBY_FIREBASE_AUTH_DOMAIN || process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
-          databaseURL: env.GATSBY_FIREBASE_DATABASE_URL || process.env.GATSBY_FIREBASE_DATABASE_URL,
-          projectId: env.GATSBY_FIREBASE_PROJECT_ID || process.env.GATSBY_FIREBASE_PROJECT_ID,
-          storageBucket: env.GATSBY_FIREBASE_STORAGE_BUCKET || process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
-          messagingSenderId: env.GATSBY_FIREBASE_MESSAGING_SENDER_ID || process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
-          appId: env.GATSBY_FIREBASE_APP_ID || process.env.GATSBY_FIREBASE_APP_ID,
-          measurementId: env.GATSBY_FIREBASE_MEASUREMENT_ID || process.env.GATSBY_FIREBASE_MEASUREMENT_ID,
+          apiKey: credentials.apiKey || process.env.GATSBY_FIREBASE_API_KEY,
+          authDomain: credentials.authDomain || process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
+          databaseURL: credentials.databaseURL || process.env.GATSBY_FIREBASE_DATABASE_URL,
+          projectId: credentials.projectId || process.env.GATSBY_FIREBASE_PROJECT_ID,
+          storageBucket: credentials.storageBucket || process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
+          messagingSenderId: credentials.messagingSenderId || process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
+          appId: credentials.appId || process.env.GATSBY_FIREBASE_APP_ID,
+          measurementId: credentials.measurementId || process.env.GATSBY_FIREBASE_MEASUREMENT_ID,
         })
         setFirebase(firebaseInstance)
       })

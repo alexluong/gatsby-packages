@@ -52,23 +52,23 @@ module.exports = {
           functions: true,
           performance: false,
         },
-        env: {
-            GATSBY_FIREBASE_API_KEY: '<YOUR_FIREBASE_API_KEY>'
-            GATSBY_FIREBASE_AUTH_DOMAIN: '<YOUR_FIREBASE_AUTH_DOMAIN>'
-            GATSBY_FIREBASE_DATABASE_URL: '<YOUR_FIREBASE_DATABASE_URL>'
-            GATSBY_FIREBASE_PROJECT_ID: '<YOUR_FIREBASE_PROJECT_ID>'
-            GATSBY_FIREBASE_STORAGE_BUCKET: '<YOUR_FIREBASE_STORAGE_BUCKET>'
-            GATSBY_FIREBASE_MESSAGING_SENDER_ID: '<YOUR_FIREBASE_MESSAGING_SENDER_ID>'
-            GATSBY_FIREBASE_APP_ID: '<YOUR_FIREBASE_APP_ID>'
-            GATSBY_FIREBASE_MEASUREMENT_ID: '<YOUR_FIREBASE_ANALYTICS_TRACKING_ID>'
-        }
+        credentials: {
+          apiKey: "<YOUR_FIREBASE_API_KEY>",
+          authDomain: "<YOUR_FIREBASE_AUTH_DOMAIN>",
+          databaseURL: "<YOUR_FIREBASE_DATABASE_URL>",
+          projectId: "<YOUR_FIREBASE_PROJECT_ID>",
+          storageBucket: "<YOUR_FIREBASE_STORAGE_BUCKET>",
+          messagingSenderId: "<YOUR_FIREBASE_MESSAGING_SENDER_ID>",
+          appId: "<YOUR_FIREBASE_APP_ID>",
+          measurementId: "<YOUR_FIREBASE_MEASUREMENT_ID>",
+        },
       },
     },
   ],
 }
 ```
 
-The `env` option defines your firebase credentials. If your variables change in different environments, consider using environment variables instead. This plugin can also pull your firebase credentials from environment variables. One way to do that is using `dotenv` library:
+The `credentials` option defines your firebase credentials. If your variables change in different environments, consider using environment variables instead. This plugin can also pull your firebase credentials from environment variables. One way to do that is using `dotenv` library:
 
 ```
 npm install -D dotenv
