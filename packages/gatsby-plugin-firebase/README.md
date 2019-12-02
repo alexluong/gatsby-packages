@@ -63,6 +63,35 @@ GATSBY_FIREBASE_APP_ID=<YOUR_FIREBASE_APP_ID>
 GATSBY_FIREBASE_MEASUREMENT_ID=<YOUR_FIREBASE_ANALYTICS_TRACKING_ID>
 ```
 
+If you do not want to use environment variables, you can pass the credentials directly into the plugin options like this:
+
+```js
+module.exports = {
+  plugins: [
+    ...otherPlugins,
+
+    {
+      resolve: "gatsby-plugin-firebase",
+      options: {
+        features: {
+          ...allFeatures
+        },
+        credentials: {
+          apiKey: 'YOUR_GATSBY_FIREBASE_API_KEY',
+          authDomain: 'YOUR_GATSBY_FIREBASE_AUTH_DOMAIN',
+          databaseURL: 'YOUR_GATSBY_FIREBASE_DATABASE_URL',
+          projectId: 'YOUR_GATSBY_FIREBASE_PROJECT_ID',
+          storageBucket: 'YOUR_GATSBY_FIREBASE_STORAGE_BUCKET',
+          messagingSenderId: 'YOUR_GATSBY_FIREBASE_MESSAGING_SENDER_ID',
+          appId: 'YOUR_GATSBY_FIREBASE_APP_ID',
+          measurementId: 'YOUR_GATSBY_FIREBASE_MEASUREMENT_ID',
+        }
+      },
+    },
+  ],
+}
+```
+
 ### 2. Register Gatsby plugin
 
 In `gatsby-config.js`:
