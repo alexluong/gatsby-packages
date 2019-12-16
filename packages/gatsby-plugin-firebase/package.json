@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-firebase",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "description": "Gatsby plugin that provides drop-in support for Firebase",
   "author": "Alex Luong <alex@alexluong.com>",
