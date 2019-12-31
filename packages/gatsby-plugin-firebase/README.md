@@ -206,7 +206,7 @@ function MyComponent({ firebase }) {
       .ref("/user")
       .once("value")
       .then(snapshot => {
-        setData(snapshot.val())
+        setUser(snapshot.val())
       })
   }, [firebase])
 
@@ -267,10 +267,10 @@ class MyComponent extends React.Component {
     if (!prevProps.firebase && this.props.firebase) {
       this.props.firebase
         .database()
-        .ref("/data")
+        .ref("/user")
         .once("value")
         .then(snapshot => {
-          this.setState({ data: snapshot.val() })
+          this.setState({ user: snapshot.val() })
         })
     }
   }
