@@ -1,6 +1,8 @@
 declare module "gatsby-plugin-firebase" {
   export function useFirebase(
-    callback: (firebase: typeof import("firebase")) => void,
+    callback: (
+      firebase: typeof import("firebase"),
+    ) => void | (() => void),
     deps: any[],
   ): void;
 
