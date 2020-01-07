@@ -4,5 +4,7 @@ declare module "gatsby-plugin-firebase" {
     deps: any[],
   ): void;
 
-  export var FirebaseContext: import("react").Context<typeof import("firebase")>;
+  export var FirebaseContext: import("react").Context<
+    typeof import("firebase") | undefined
+  >;
 }
