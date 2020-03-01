@@ -110,7 +110,7 @@ export default Component
 
 ## Migrating from v0.1
 
-First of all, thank you for using my package. This is my first meaningful contribution to the OS community, and I appreciate everyone who trusts and uses this package from the beginning.
+First of all, thank you for using my package. This is my first meaningful contribution to the OS community, and I appreciate everyone of you who trusts and uses this package from the beginning.
 
 I believe `gatsby-plugin-firebase` v0.2 is a significant improvement over v0.1 because it's much more intuitive and similar to how React developers would use Firebase.
 
