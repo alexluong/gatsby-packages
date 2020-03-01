@@ -7,7 +7,8 @@ exports.onCreateWebpackConfig = ({ plugins, actions }, pluginOptions) => {
       projectId,
       storageBucket,
       messagingSenderId,
-      appId
+      appId,
+      measurementId
     }
   } = pluginOptions;
 
@@ -21,7 +22,8 @@ exports.onCreateWebpackConfig = ({ plugins, actions }, pluginOptions) => {
           FIREBASE_PROJECT_ID: JSON.stringify(projectId),
           FIREBASE_STORAGE_BUCKET: JSON.stringify(storageBucket),
           FIREBASE_MESSAGING_SENDER_ID: JSON.stringify(messagingSenderId),
-          FIREBASE_APP_ID: JSON.stringify(appId)
+          FIREBASE_APP_ID: JSON.stringify(appId),
+          FIREBASE_MEASUREMENT_ID: JSON.stringify(measurementId)
         }
       })
     ]

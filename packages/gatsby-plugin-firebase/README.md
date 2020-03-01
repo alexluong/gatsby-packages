@@ -9,17 +9,10 @@ Provides drop-in support for Firebase
 
 - [Installation](#installation)
 - [Usage](#usage)
-  - [1. Set up environment variables](#1-set-up-environment-variables)
-  - [2. Register Gatsby plugin](#2-register-gatsby-plugin)
-  - [3. Use Firebase](#3-use-firebase)
-- [API](#api)
-  - [Gatsby options](#gatsby-options)
-    - [features](#features)
-  - [Exports](#exports)
-    - [useFirebase](#usefirebase)
-    - [FirebaseContext](#firebasecontext)
-  - [Notes](#notes)
-- [Limitations](#limitations)
+  - [1. Register Gatsby plugin](#1-register-gatsby-plugin)
+  - [3. Import Firebase feature packages](#3-import-firebase-feature-packages)
+  - [4. Use Firebase](#4-use-firebase)
+- [Migrating from v0.1](#migrating-from-v01)
 - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -32,37 +25,7 @@ npm install firebase gatsby-plugin-firebase
 
 ## Usage
 
-### 1. Set up environment variables
-
-This plugin depends on environment variables. One way to do that is using `dotenv` library:
-
-```
-npm install -D dotenv
-```
-
-In `gatsby-config.js`:
-
-```
-require("dotenv").config()
-
-module.exports = {
-  ...
-}
-```
-
-Then, create the `.env` file in your root directory:
-
-```
-GATSBY_FIREBASE_API_KEY=<YOUR_FIREBASE_API_KEY>
-GATSBY_FIREBASE_AUTH_DOMAIN=<YOUR_FIREBASE_AUTH_DOMAIN>
-GATSBY_FIREBASE_DATABASE_URL=<YOUR_FIREBASE_DATABASE_URL>
-GATSBY_FIREBASE_PROJECT_ID=<YOUR_FIREBASE_PROJECT_ID>
-GATSBY_FIREBASE_STORAGE_BUCKET=<YOUR_FIREBASE_STORAGE_BUCKET>
-GATSBY_FIREBASE_MESSAGING_SENDER_ID=<YOUR_FIREBASE_MESSAGING_SENDER_ID>
-GATSBY_FIREBASE_APP_ID=<YOUR_FIREBASE_APP_ID>
-```
-
-### 2. Register Gatsby plugin
+### 1. Register Gatsby plugin
 
 In `gatsby-config.js`:
 
@@ -74,63 +37,92 @@ module.exports = {
     {
       resolve: "gatsby-plugin-firebase",
       options: {
-        features: {
-          auth: true,
-          database: true,
-          firestore: false,
-          storage: false,
-          messaging: false,
-          functions: true,
-        },
-      },
-    },
+        credentials: {
+          apiKey: "<YOUR_FIREBASE_API_KEY>",
+          authDomain: "<YOUR_FIREBASE_AUTH_DOMAIN>,
+          databaseURL: "<YOUR_FIREBASE_DATABASE_URL>,
+          projectId: "<YOUR_FIREBASE_PROJECT_ID>,
+          storageBucket: "<YOUR_FIREBASE_STORAGE_BUCKET>,
+          messagingSenderId: "<YOUR_FIREBASE_MESSAGING_SENDER_ID>,
+          appId: "<YOUR_FIREBASE_APP_ID>
+        }
+      }
+    }
   ],
 }
 ```
 
-### 3. Use Firebase
+### 3. Import Firebase feature packages
 
-There are 2 ways to access `firebase` in your application:
+In `gatsby-browser.js` and `gatsby-ssr.js`, import Firebase packages that you would like to use. Please check the official [`firebase`](https://www.npmjs.com/package/firebase) package or [Firebase Documentation](https://firebase.google.com/docs/reference/js) for all available options. Here is an example setup for an application that uses Firebase Authentication, Firestore, and Functions:
 
-1. [`useFirebase` hook](#usefirebase)
-2. [`FirebaseContext` context](#firebasecontext)
+```js
+// gatsby-browser.js and gatsby-ssr.js
 
-## API
+import "firebase/auth"
+import "firebase/firestore"
+import "firebase/functions"
+```
 
-### Gatsby options
+### 4. Use Firebase
 
-#### features
+Use Firebase like how you would use in a React project.
 
-`features` is a `required` option. It specifies which features of Firebase you intend to use.
+```jsx
+import React from "react"
+import firebase from "gatsby-plugin-firebase"
 
-| property    | type      | required | default | description                         |
-| ----------- | --------- | -------- | ------- | ----------------------------------- |
-| `auth`      | `boolean` | `false`  | `false` | import `firebase/auth` package      |
-| `database`  | `boolean` | `false`  | `false` | import `firebase/database` package  |
-| `firestore` | `boolean` | `false`  | `false` | import `firebase/firestore` package |
-| `storage`   | `boolean` | `false`  | `false` | import `firebase/storage` package   |
-| `messaging` | `boolean` | `false`  | `false` | import `firebase/messaging` package |
-| `functions` | `boolean` | `false`  | `false` | import `firebase/functions` package |
+function Component() {
+  const [data, setData] = React.useState(null)
 
-Although none of the properties is required and everything is defaulted to `false`, you must specify at least 1 feature and set its value to `true`.
+  React.useEffect(() => {
+    firebase
+      .database()
+      .ref("/data")
+      .once("value")
+      .then(snapshot => {
+        setData(snapshot.val())
+      })
+  }, [])
 
-### Exports
+  return <div>{data ? data : "Loading..."}</div>
+}
 
-#### useFirebase
+export default Component
+```
 
-> `function() -> firebase`
+You can also use this package together with [`react-firebase-hooks`](https://github.com/CSFrequency/react-firebase-hooks).
 
-This plugin exports a React hook `useFirebase`. It uses the same API as `React.useEffect`, except for that in the first argument, the function has `firebase` as its parameter.
+```jsx
+import React from "react"
+import firebase from "gatsby-plugin-firebase"
+import { useObjectVal } from "react-firebase-hooks/database"
 
-If you're interested in the reasoning behind this API design, you can read about it in the [Notes section](#notes).
+function Component() {
+  const [data, setData] = React.useState(null)
+  const [data, isLoading] = useObjectVal(firebase.database().ref("data"))
 
-Here is a sample component using `useFirebase`:
+  return <div>{isLoading ? "Loading..." : data}</div>
+}
+
+export default Component
+```
+
+## Migrating from v0.1
+
+First of all, thank you for using my package. This is my first meaningful contribution to the OS community, and I appreciate everyone who trusts and uses this package from the beginning.
+
+I believe `gatsby-plugin-firebase` v0.2 is a significant improvement over v0.1 because it's much more intuitive and similar to how React developers would use Firebase.
+
+With v0.2, you can import `firebase` from `gatsby-plugin-firebase` and use it like you would import from `firebase`. Therefore, I removed `useFirebase` and `FirebaseContext` and hopefully made it much more intuitive to use.
+
+Here is a sample code from v0.1:
 
 ```jsx
 import React from "react"
 import { useFirebase } from "gatsby-plugin-firebase"
 
-function MyComponent() {
+function Component() {
   const [user, setUser] = React.useState()
 
   useFirebase(firebase => {
@@ -146,132 +138,38 @@ function MyComponent() {
   return <p>Hello {user ? user.name : "there"}</p>
 }
 
-export default MyComponent
+export default Component
 ```
 
-#### FirebaseContext
-
-> `ReactContext`
-
-`firebase` is saved inside `FirebaseContext`. You can use it like every other React Context. However, be aware that on first render, `firebase` is null, so you'll have to handle that case yourself.
+and the equivalent code from v0.2:
 
 ```jsx
 import React from "react"
-import { FirebaseContext } from "gatsby-plugin-firebase"
+// import { useFirebase } from "gatsby-plugin-firebase"
+import firebase from "gatsby-plugin-firebase"
 
-function MyComponent({ firebase }) {
-  const firebase = React.useContext(FirebaseContext)
+function Component() {
   const [user, setUser] = React.useState()
 
+  // instead of useFirebase, you can use React.useEffect
+  // useFirebase(firebase => {
   React.useEffect(() => {
-    if (!firebase) {
-      return
-    }
-    
     firebase
       .database()
       .ref("/user")
       .once("value")
       .then(snapshot => {
-        setData(snapshot.val())
+        setUser(snapshot.val())
       })
-  }, [firebase])
+  }, [])
 
   return <p>Hello {user ? user.name : "there"}</p>
 }
 
-export default MyComponent
+export default Component
 ```
 
-On the other hand, when you need to perform actions based on user events, this would be a great way for you to access `firebase`. At that point, `firebase` should already be initialized, so you don't have to worry about it anymore:
-
-```jsx
-import React from "react"
-import { FirebaseContext } from "gatsby-plugin-firebase"
-
-function MyComponent({ firebase }) {
-  const firebase = React.useContext(FirebaseContext)
-
-  function setUser() {
-    firebase
-      .database()
-      .ref("/user")
-      .set("Alex")
-  }
-
-  return <button onClick={setUser}>Set User Name to Alex</button>
-}
-
-export default MyComponent
-```
-
-### Notes
-
-It is **highly** recommended that you use `useFirebase` to access your `firebase` instance. Please consider reading [this blog post](https://alexluong.com) to understand the reasoning behind the API.
-
-The idea is that to get Firebase to work in both client-side environment and SSR without any UX compromises, you have to take special care of the Firebase initialization. Thanks to React Hook, you can use `useFirebase` in a kinda-nice way. Without it, you'd have to constantly check whether `firebase` is initialized or not (if not, it's `null`).
-
-Here is a sample higher-order component `withFirebase` that you can write. `gatsby-plugin-firebase` does not export this helper component.
-
-```jsx
-export const withFirebase = Component => props => (
-  <FirebaseContext.Consumer>
-    {firebase => <Component {...props} firebase={firebase} />}
-  </FirebaseContext.Consumer>
-)
-```
-
-Then, let's assume that you're on an older version of React and have to use the old API and not React Hooks, here is one way you can use it:
-
-```jsx
-import React from "react"
-import { withFirebase } from "./withFirebase"
-
-class MyComponent extends React.Component {
-  state = { user: null }
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.firebase && this.props.firebase) {
-      this.props.firebase
-        .database()
-        .ref("/data")
-        .once("value")
-        .then(snapshot => {
-          this.setState({ data: snapshot.val() })
-        })
-    }
-  }
-
-  render() {
-    const { user } = this.state
-    
-    return <p>Hello {user ? user.name : "there"}</p>
-  }
-}
-
-export default withFirebase(MyComponent)
-```
-
-Because you have to constantly be aware of your `firebase` instance, this API is not a part of the library.
-
-
-## Limitations
-
-One limitation of this approach is that you can only access `firebase` inside your React components. One way to go around it is to pass `firebase` as an argument to the functions that need it.
-
-```js
-export function fetchData(firebase) {
-  return new Promise(resolve => {
-    firebase
-      .database()
-      .ref("/data")
-      .once("value")
-      .then(snapshot => {
-        resolve(snapshot.val())
-      })
-  })
-}
-```
+Please let me know if you need backward-compatible support to help ease the transition.
 
 ## License
 

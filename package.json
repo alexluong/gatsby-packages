@@ -1,12 +1,20 @@
 {
   "name": "gatsby-packages",
   "private": true,
-  "version": "1.0.0",
   "repository": "git@github.com:alexluong/gatsby-packages.git",
   "author": "Alex Luong <alex@alexluong.com>",
   "license": "MIT",
   "workspaces": [
     "packages/*",
     "examples/*"
-  ]
+  ],
+  "devDependencies": {
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.1.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  }
 }
