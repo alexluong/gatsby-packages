@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-firebase",
-  "version": "0.2.0-beta.3",
+  "version": "0.2.0-beta.4",
   "license": "MIT",
   "description": "Gatsby plugin that provides drop-in support for Firebase",
   "main": "index.js",
