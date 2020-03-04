@@ -54,10 +54,10 @@ module.exports = {
 
 ### 3. Import Firebase feature packages
 
-In `gatsby-browser.js` and `gatsby-ssr.js`, import Firebase packages that you would like to use. Please check the official [`firebase`](https://www.npmjs.com/package/firebase) package or [Firebase Documentation](https://firebase.google.com/docs/reference/js) for all available options. Here is an example setup for an application that uses Firebase Authentication, Firestore, and Functions:
+In `gatsby-browser.js`, import Firebase packages that you would like to use. Please check the official [`firebase`](https://www.npmjs.com/package/firebase) package or [Firebase Documentation](https://firebase.google.com/docs/reference/js) for all available options. Here is an example setup for an application that uses Firebase Authentication, Firestore, and Functions:
 
 ```js
-// gatsby-browser.js and gatsby-ssr.js
+// gatsby-browser.js
 
 import "firebase/auth"
 import "firebase/firestore"
