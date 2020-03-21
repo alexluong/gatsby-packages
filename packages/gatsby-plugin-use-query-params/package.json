@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-use-query-params",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "",
   "author": "Alex Luong <alex@alexluong.com>",
@@ -12,7 +12,8 @@
   "homepage": "https://github.com/alexluong/gatsby-packages/tree/master/packages/gatsby-plugin-use-query-params#readme",
   "keywords": [
     "gatsby",
-    "gatsby-plugin"
+    "gatsby-plugin",
+    "query-params"
   ],
   "peerDependencies": {
     "gatsby": ">=2.0",

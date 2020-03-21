@@ -21,7 +21,7 @@ npm install use-query-params gatsby-plugin-use-query-params
 
 ## Usage
 
-1. Register plugin
+### 1. Register plugin
 
 In `gatsby-config.js`:
 
@@ -35,7 +35,7 @@ module.exports = {
 };
 ```
 
-2. Use `use-query-params` package as usual. Here is [its documentation](https://github.com/pbeshai/use-query-params).
+### 2. Use `use-query-params` package as usual. Here is [its documentation](https://github.com/pbeshai/use-query-params).
 
 ```jsx
 import React from "react";
