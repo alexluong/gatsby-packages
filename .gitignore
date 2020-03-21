@@ -4,3 +4,8 @@
 node_modules
 
 examples/site
+examples/dev
+
+# don't need yarn.lock for this repo
+# because it only contains NPM packages
+yarn.lock

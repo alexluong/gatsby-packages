@@ -1,0 +1,23 @@
+{
+  "name": "gatsby-plugin-use-query-params",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "",
+  "author": "Alex Luong <alex@alexluong.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexluong/gatsby-packages.git",
+    "directory": "packages/gatsby-plugin-prefix"
+  },
+  "homepage": "https://github.com/alexluong/gatsby-packages/tree/master/packages/gatsby-plugin-use-query-params#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "peerDependencies": {
+    "gatsby": ">=2.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0",
+    "use-query-params": ">=0.4.3"
+  }
+}
