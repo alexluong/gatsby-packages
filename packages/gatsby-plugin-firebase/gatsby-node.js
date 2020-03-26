@@ -14,6 +14,7 @@ Here is a sample valid set up:
         functions: true,
         performance: false,
         analytics: false,
+        remoteConfig: true,
       },
     },
   },
@@ -35,8 +36,9 @@ exports.onPreBootstrap = ({ reporter }, options) => {
     !features.storage &&
     !features.messaging &&
     !features.functions &&
-    !features.performance && 
-    !features.analytics
+    !features.performance &&
+    !features.analytics &&
+    !features.remoteConfig
   ) {
     reporter.panic(ERROR_MESSAGE)
   }

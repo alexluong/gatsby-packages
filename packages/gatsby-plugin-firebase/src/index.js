@@ -15,6 +15,7 @@ function Index({ features, credentials = {}, children }) {
       const functions = features.functions ? import("firebase/functions") : null
       const performance = features.performance ? import("firebase/performance") : null
       const analytics = features.analytics ? import("firebase/analytics") : null
+      const remoteConfig = features.remoteConfig ? import("firebase/remote-config") : null
 
       Promise.all([
         app,
@@ -26,6 +27,7 @@ function Index({ features, credentials = {}, children }) {
         functions,
         performance,
         analytics,
+        remoteConfig,
       ]).then(values => {
         const firebaseInstance = values[0]
         firebaseInstance.initializeApp({
