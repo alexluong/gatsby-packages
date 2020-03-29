@@ -1,0 +1,22 @@
+{
+  "name": "gatsby-plugin-layouts",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Never write wrapPageElement or wrapRootElement again",
+  "author": "Alex Luong <alex@alexluong.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexluong/gatsby-packages.git",
+    "directory": "packages/gatsby-plugin-layouts"
+  },
+  "homepage": "https://github.com/alexluong/gatsby-packages/tree/master/packages/gatsby-plugin-layouts#readme",
+  "keywords": [
+    "gatsby",
+    "gatsby-plugin"
+  ],
+  "peerDependencies": {
+    "gatsby": ">=2.18.0",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}
