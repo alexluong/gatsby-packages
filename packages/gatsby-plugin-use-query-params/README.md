@@ -16,7 +16,7 @@ Drop in support for [`use-query-params`](https://www.npmjs.com/package/use-query
 ## Installation
 
 ```
-npm install use-query-params gatsby-plugin-use-query-params
+npm install use-query-params query-string gatsby-plugin-use-query-params
 ```
 
 ## Usage
