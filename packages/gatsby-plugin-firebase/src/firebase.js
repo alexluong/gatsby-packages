@@ -1,6 +1,6 @@
-import firebase from "firebase/app";
+import * as firebase from "firebase/app";
 
-if (!firebase.apps.length) {
+if (!firebase.getApps().length) {
   firebase.initializeApp({
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,

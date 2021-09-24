@@ -1,6 +1,6 @@
 {
   "name": "gatsby-plugin-firebase",
-  "version": "0.2.0-beta.4",
+  "version": "0.2.0-beta.5",
   "license": "MIT",
   "description": "Gatsby plugin that provides drop-in support for Firebase",
   "main": "index.js",
@@ -18,7 +18,7 @@
     "firebase"
   ],
   "peerDependencies": {
-    "firebase": ">=6.x",
+    "firebase": ">=8.x",
     "gatsby": ">=2.x",
     "react": ">=16.8.x",
     "react-dom": ">=16.8.x"
