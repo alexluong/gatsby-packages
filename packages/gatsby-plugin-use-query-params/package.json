@@ -19,6 +19,6 @@
     "gatsby": ">=2.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "use-query-params": ">=0.4.3"
+    "use-query-params": ">=2.0.0"
   }
 }
